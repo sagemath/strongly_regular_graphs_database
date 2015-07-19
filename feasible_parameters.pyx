@@ -62,4 +62,10 @@ for v in range(vmax):
                 feasible.add((v,k,l,mu))
 
 from sage.structure.sage_object import load
-assert set(feasible) == set(load("brouwer.sobj"))
+
+try:
+    brouwer = load("brouwer.sobj")
+except:
+    raise RuntimeError("\"brouwer.sobj\" cannot be found. Please run 'make'")
+
+assert set(feasible) == set(brouwer)

@@ -1,5 +1,9 @@
 vmax = 1301
 
+if 'feasible' not in locals():
+    raise RuntimeError("'feasible' variable undefined. Run feasible_parameters.pyx.")
+
+
 def paley():
     ans = {}
     for q in range(vmax):
