@@ -1,7 +1,7 @@
 Database of Strongly Regular Graphs (SRG).
 
-This directory contains code to reproduce Andries Brouwer's online database [1]
-using Sage, as well as independent Sage code.
+This directory contains code to parse and reproduce Andries Brouwer's online
+database [1] using Sage.
 
 Goal: associate to each set of parameters (v,k,λ,μ) a Sage graph object
       (whenever it exists) and store non-existence results. The result will be
