@@ -23,7 +23,7 @@ Computer-friendly Andries Brouwer's database [1]
 
 In order to help reproduce the database, this repository contains code to parse
 Andries Brouwer's html pages [1] and store it in two computer-friendly
-files. They can be obtains by running 'make'.
+files. They can be obtained by running 'make'.
 
     - brouwer.txt
     - brouwer.sobj (Sage object [2])
