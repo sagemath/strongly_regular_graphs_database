@@ -1,0 +1,37 @@
+Database of Strongly Regular Graphs (SRG).
+
+This directory contains code to reproduce Andries Brouwer's online database [1]
+using Sage, as well as independent Sage code.
+
+Goal: associate to each set of parameters (v,k,λ,μ) a Sage graph object
+      (whenever it exists) and store non-existence results. The result will be
+      included into Sage.
+
+Sage code
+---------
+
+- feasible_parameters.pyx: builds the list of all admissibles parameters
+                           (v,k,λ,μ).
+
+- constructions.py:        Builds a dictionary associating a Sage graph
+                           to a set of parameters (v,k,λ,μ).
+
+So far, 776 entries of [1] can be built. 364 are left.
+
+Computer-friendly Andries Brouwer's database [1]
+------------------------------------------------
+
+In order to help reproduce the database, this repository contains code to parse
+Andries Brouwer's html pages [1] and store it in two computer-friendly
+files. They can be obtains by running 'make'.
+
+    - brouwer.txt
+    - brouwer.sobj (Sage object [2])
+
+A comment on the actual data?
+-----------------------------
+
+Please write directly to Andries Brouwer at aeb@cwi.nl.
+
+[1] http://www.win.tue.nl/~aeb/graphs/srg/srgtab.html
+[2] http://doc.sagemath.org/html/en/reference/structure/sage/structure/sage_object.html#sage.structure.sage_object.load
