@@ -123,3 +123,6 @@ for (v,k,l,mu),f in constructions.items():
         constructions[v,kk,ll,mmu] = (lambda x: f[0](*x).complement(),f[1:])
 
 leftovers = {x:brouwer[x]['comments'] for x in set(brouwer).difference(constructions) if brouwer[x]['status']=='exists'}
+
+for (v,k,l,mu),y in sorted(leftovers.items()):
+    print "({:<4}, {:<4}, {:<4}, {:<4}): {}".format(v,k,l,mu,y)
