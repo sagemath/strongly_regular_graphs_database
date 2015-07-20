@@ -112,6 +112,9 @@ constructions = {}
 for d in [paley(), orthogonal_arrays(), johnson(), steiner(), affine_polar()]:
     constructions.update(d)
 
+for g in [graphs.SchlaefliGraph, graphs.HoffmanSingletonGraph, graphs.SimsGewirtzGraph, graphs.M22Graph, graphs.CameronGraph]:
+    constructions[g().is_strongly_regular(parameters=True)] = [g]
+
 for (v,k,l,mu),f in constructions.items():
     kk  = v-k-1
     ll  = v-2*k+mu-2
