@@ -16,7 +16,7 @@ Sage code
 - constructions.py:        Builds a dictionary associating a Sage graph
                            to a set of parameters (v,k,λ,μ).
 
-So far, 776 entries of [1] can be built. 364 are left.
+So far, 810 entries of [1] can be built. 330 are left.
 
 Computer-friendly Andries Brouwer's database [1]
 ------------------------------------------------
