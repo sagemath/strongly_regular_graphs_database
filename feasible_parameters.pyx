@@ -1,4 +1,10 @@
 from sage.rings.arith import is_square
+from sage.structure.sage_object import load
+
+try:
+    brouwer = load("brouwer.sobj")
+except:
+    raise RuntimeError("\"brouwer.sobj\" cannot be found. Please run 'make'")
 
 def eigenvalues(int v,int k,int l,int mu):
     r"""
@@ -61,11 +67,5 @@ for v in range(vmax):
             if seems_feasible(v,k,l,mu):
                 feasible.add((v,k,l,mu))
 
-from sage.structure.sage_object import load
-
-try:
-    brouwer = load("brouwer.sobj")
-except:
-    raise RuntimeError("\"brouwer.sobj\" cannot be found. Please run 'make'")
 
 assert set(feasible) == set(brouwer)

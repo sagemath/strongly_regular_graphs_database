@@ -1,9 +1,5 @@
 vmax = 1301
 
-if 'feasible' not in locals():
-    raise RuntimeError("'feasible' variable undefined. Run feasible_parameters.pyx.")
-
-
 def paley():
     ans = {}
     for q in range(vmax):
@@ -112,7 +108,7 @@ constructions = {}
 for d in [paley(), orthogonal_arrays(), johnson(), steiner(), affine_polar()]:
     constructions.update(d)
 
-for g in [graphs.SchlaefliGraph, graphs.HoffmanSingletonGraph, graphs.SimsGewirtzGraph, graphs.M22Graph, graphs.CameronGraph]:
+for g in [graphs.SchlaefliGraph, graphs.HoffmanSingletonGraph, graphs.SimsGewirtzGraph, graphs.M22Graph, graphs.CameronGraph, graphs.McLaughlinGraph]:
     constructions[g().is_strongly_regular(parameters=True)] = [g]
 
 for (v,k,l,mu),f in constructions.items():
