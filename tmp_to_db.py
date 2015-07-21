@@ -22,6 +22,16 @@ with open('brouwer.txt','w') as output:
     for (v,k,l,mu),dic in sorted(data.items()):
         output.write("{:<4} {:<4} {:<4} {:<4} {:<10} {}\n".format(v,k,l,mu,dic['status'],dic['comments']))
 
+print "'brouwer.txt' file written."
+
 # sobj output
 from sage.structure.sage_object import save
 save(data,'brouwer.sobj')
+
+print "'brouwer.sobj' file written."
+
+stats = [x['status'] for x in data.values()]
+print "statistics:"
+print " - {} impossible".format(stats.count('impossible'))
+print " - {} open".format(stats.count('open'))
+print " - {} realizable".format(stats.count('exists'))
