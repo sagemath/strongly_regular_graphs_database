@@ -9,29 +9,23 @@ Using Andries Brouwer's `database of strongly regular graphs
 <http://www.win.tue.nl/~aeb/graphs/srg/srgtab.html>`__, it can also return
 non-existence results. Note that some constructions are missing, and that some
 strongly regular graphs that exist in the database cannot be automatically built
-by Sage.
+by Sage. Help us if you know any.
 
 .. NOTE::
 
-    - Any missing/incorrect information in the database must be reported to
-      `Andries E. Brouwer <http://www.win.tue.nl/~aeb/>`__ directly, in order to
-      have a unique and updated source of information.
-
+    Any missing/incorrect information in the database must be reported to
+    `Andries E. Brouwer <http://www.win.tue.nl/~aeb/>`__ directly, in order to
+    have a unique and updated source of information.
 
 Functions
 ---------
 """
 from sage.categories.sets_cat import EmptySetError
 from sage.misc.unknown import Unknown
-from sage.structure.sage_object import load
-from sage.rings.arith import divisors
 from sage.rings.arith import is_square
 from sage.rings.arith import is_prime_power
 from sage.misc.cachefunc import cached_function
 from sage.combinat.designs.orthogonal_arrays import orthogonal_array
-from sage.graphs.generators.intersection import OrthogonalArrayBlockGraph
-from sage.graphs.generators.families import JohnsonGraph
-from sage.graphs.generators.intersection import IntersectionGraph
 from sage.combinat.designs.bibd import balanced_incomplete_block_design
 from sage.graphs.generators.smallgraphs import McLaughlinGraph
 from sage.graphs.generators.smallgraphs import CameronGraph
@@ -105,6 +99,7 @@ def is_orthogonal_array_block_graph(int v,int k,int l,int mu):
         mu != m*(m-1)):
         return
     if orthogonal_array(m,n,existence=True):
+        from sage.graphs.generators.intersection import OrthogonalArrayBlockGraph
         return (lambda m,n : OrthogonalArrayBlockGraph(m, n), m,n)
 
 @cached_function
@@ -136,6 +131,7 @@ def is_johnson(int v,int k,int l,int mu):
     if (mu == 4 and
         k  == 2*(m-2) and
         v  == m*(m-1)/2):
+        from sage.graphs.generators.families import JohnsonGraph
         return (lambda m: JohnsonGraph(m,2), m)
 
 @cached_function
@@ -175,6 +171,7 @@ def is_steiner(int v,int k,int l,int mu):
         k == m*(n-m)/(m-1) and
         l == (m-1)**2 + (n-1)/(m-1)-2 and
         balanced_incomplete_block_design(n,m,existence=True)):
+        from sage.graphs.generators.intersection import IntersectionGraph
         return (lambda n,m: IntersectionGraph(map(frozenset,balanced_incomplete_block_design(n,m))),n,m)
 
 @cached_function
@@ -201,6 +198,7 @@ def is_affine_polar(int v,int k,int l,int mu):
 
         sage: t = is_affine_polar(5,5,5,5); t
     """
+    from sage.rings.arith import divisors
     # Using notations from http://www.win.tue.nl/~aeb/graphs/VO.html
     #
     # VO+(2e,q) has parameters: v = q^(2e), k = (q^(e−1) + 1)(q^e − 1), λ =
