@@ -30,7 +30,7 @@ Andries Brouwer's html pages [1] and store it in two computer-friendly
 files. They can be obtained by running 'make'.
 
     - brouwer.txt
-    - brouwer.sobj (Sage object [2])
+    - brouwer.json
 
 A comment on the actual data?
 -----------------------------
@@ -38,5 +38,3 @@ A comment on the actual data?
 Please write directly to Andries Brouwer at aeb@cwi.nl.
 
 [1] http://www.win.tue.nl/~aeb/graphs/srg/srgtab.html
-[2] http://doc.sagemath.org/html/en/reference/structure/sage/structure/sage_object.html#sage.structure.sage_object.load
-[3] http://cython.org/
