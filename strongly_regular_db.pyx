@@ -53,9 +53,10 @@ def is_paley(int v,int k,int l,int mu):
     EXAMPLES::
 
         sage: t = is_paley(13,6,2,3); t
+        (..., 13)
         sage: g = t[0](*t[1:]); g
         sage: g.is_strongly_regular(parameters=True)
-
+        (13, 6, 2, 3)
         sage: t = is_paley(5,5,5,5); t
     """
     if (v%4 == 1 and is_prime_power(v) and
@@ -82,8 +83,11 @@ def is_orthogonal_array_block_graph(int v,int k,int l,int mu):
     EXAMPLES::
 
         sage: t = is_orthogonal_array_block_graph(64, 35, 18, 20); t
+        (..., 5, 8)
         sage: g = t[0](*t[1:]); g
+        OA(5,8): Graph on 64 vertices
         sage: g.is_strongly_regular(parameters=True)
+        (64, 35, 18, 20)
 
         sage: t = is_orthogonal_array_block_graph(5,5,5,5); t
     """
@@ -119,8 +123,11 @@ def is_johnson(int v,int k,int l,int mu):
     EXAMPLES::
 
         sage: t = is_johnson(10,6,3,4); t
+        (..., 5)
         sage: g = t[0](*t[1:]); g
+        Johnson graph with parameters 5,2: Graph on 10 vertices
         sage: g.is_strongly_regular(parameters=True)
+        (10, 6, 3, 4)
 
         sage: t = is_johnson(5,5,5,5); t
     """
@@ -154,8 +161,11 @@ def is_steiner(int v,int k,int l,int mu):
     EXAMPLES::
 
         sage: t = is_steiner(26,15,8,9); t
+        (..., 13, 3)
         sage: g = t[0](*t[1:]); g
+        Intersection Graph: Graph on 26 vertices
         sage: g.is_strongly_regular(parameters=True)
+        (26, 15, 8, 9)
 
         sage: t = is_steiner(5,5,5,5); t
     """
@@ -193,8 +203,11 @@ def is_affine_polar(int v,int k,int l,int mu):
     EXAMPLES::
 
         sage: t = is_affine_polar(81,32,13,12); t
+        (..., 4, 3)
         sage: g = t[0](*t[1:]); g
+        Affine Polar Graph VO^+(4,3): Graph on 81 vertices
         sage: g.is_strongly_regular(parameters=True)
+        (81, 32, 13, 12)
 
         sage: t = is_affine_polar(5,5,5,5); t
     """
@@ -307,36 +320,64 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxx
     Petersen's graph from its set of parameters::
 
         sage: strongly_regular_graph(10,3,0,1,existence=True)
+        True
         sage: strongly_regular_graph(10,3,0,1)
+        complement(Johnson graph with parameters 5,2): Graph on 10 vertices
 
     An obviously infeasible set of parameters::
 
         sage: strongly_regular_graph(5,5,5,5,existence=True)
+        False
         sage: strongly_regular_graph(5,5,5,5)
+        Traceback (most recent call last):
+        ...
+        ValueError: There exists no (5,5,5,5)-strongly regular graph (basic arithmetic checks)
 
     An set of parameters proved in a paper to be infeasible::
 
         sage: strongly_regular_graph(324,57,0,12,existence=True)
+        False
         sage: strongly_regular_graph(324,57,0,12)
+        Traceback (most recent call last):
+        ...
+        EmptySetError: Andries Brouwer's database reports that no (324, 57, 0,
+        12)-strongly regular graph exists.Comments: <a
+        href="srgtabrefs.html#GavrilyukMakhnev05">Gavrilyuk & Makhnev</a> and <a
+        href="srgtabrefs.html#KaskiOstergard07">Kaski & stergrd</a>
 
     A set of parameters unknown to be realizable in Andries Brouwer's database::
 
         sage: strongly_regular_graph(324,95,22,30,existence=True)
+        Unknown
         sage: strongly_regular_graph(324,95,22,30)
+        Traceback (most recent call last):
+        ...
+        RuntimeError: Andries Brouwer's database reports that no
+        (324,95,22,30)-strongly regular graph is known to exist.
+        Comments:
 
     A realizable set of parameters that Sage cannot realize (help us!)::
 
         sage: strongly_regular_graph(279,128,52,64,existence=True)
+        True
         sage: strongly_regular_graph(279,128,52,64)
+        Traceback (most recent call last):
+        ...
+        RuntimeError: Andries Brouwer's database claims that such a
+        (279,128,52,64)-strongly regular graph exists, but Sage does not know
+        how to build it. If *you* do, please get in touch with us on sage-devel!
+        Comments: pg(8,15,4)?; 2-graph*
 
     A large unknown set of parameters (not in Andries Brouwer's database)::
 
         sage: strongly_regular_graph(1394,175,0,25,existence=True)
+        Unknown
         sage: strongly_regular_graph(1394,175,0,25)
+        Traceback (most recent call last):
+        ...
+        RuntimeError: Sage cannot figure out if a (1394,175,0,25)-strongly regular graph exists.
     """
-    # This code checks Sage's data/functions *before* querying Brouwer's
-    # data. This way, we can compare this function with the data of Brouwer and
-    # check that they agree with each other.
+    load_brouwer_database()
 
     params = (v,k,l,mu)
     params_complement = (v,v-k-1,v-2*k+mu-2,v-2*k+l)
@@ -344,8 +385,8 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxx
     if not seems_feasible(v,k,l,mu):
         if existence:
             return False
-        raise ValueError("There exists no ({},{},{},{})-strongly regular graph "+
-                         +"(basic arithmetic checks)".format(v,k,l,mu))
+        raise ValueError("There exists no "+str(params)+"-strongly regular graph "+
+                         "(basic arithmetic checks)")
 
     constructions = {
         ( 27,  16, 10,  8): [SchlaefliGraph],
@@ -364,6 +405,8 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxx
                       is_orthogonal_array_block_graph,
                       is_steiner, is_affine_polar]
 
+    # Going through all test functions, for the set of parameters and its
+    # complement.
     for f in test_functions:
         if f(*params):
             if existence:
@@ -388,30 +431,30 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxx
             if existence:
                 return False
             raise EmptySetError("Andries Brouwer's database reports that no "+
-                                "({},{},{},{})-strongly regular graph exists.".format(v,k,l,mu)
-                                +brouwer_data['comments'])
+                                str((v,k,l,mu))+"-strongly regular graph exists."+
+                                "Comments: "+brouwer_data['comments'].encode('ascii','ignore'))
 
         if brouwer_data['status'] == 'open':
             if existence:
                 return Unknown
-            raise RuntimeError("Andries Brouwer's database reports that no "+
-                               "({},{},{},{})-strongly regular graph is known "+
-                               "to exist.\nComments: {}".format(v,k,l,mu)
-                               +brouwer_data['comments'])
+            raise RuntimeError(("Andries Brouwer's database reports that no "+
+                                "({},{},{},{})-strongly regular graph is known "+
+                                "to exist.\nComments: ").format(v,k,l,mu)
+                               +brouwer_data['comments'].encode('ascii','ignore'))
 
         if brouwer_data['status'] == 'exists':
             if existence:
                 return True
-            raise RuntimeError("Andries Brouwer's database claims that such a "+
-                               "({},{},{},{})-strongly regular graph exists, but "+
-                               "Sage does not know how to build it. If *you* do, "+
-                               "please get in touch with us on sage-devel!\n"+
-                               "Comments: {}".format(v,k,l,mu)
-                               +brouwer_data['comments'])
+            raise RuntimeError(("Andries Brouwer's database claims that such a "+
+                                "({},{},{},{})-strongly regular graph exists, but "+
+                                "Sage does not know how to build it. If *you* do, "+
+                                "please get in touch with us on sage-devel!\n"+
+                                "Comments: ").format(v,k,l,mu)
+                               +brouwer_data['comments'].encode('ascii','ignore'))
     if existence:
         return Unknown
-    raise RuntimeError("Sage cannot figure out if a ({},{},{},{})-strongly "+
-                       "regular graph exists.".format(v,k,l,mu))
+    raise RuntimeError(("Sage cannot figure out if a ({},{},{},{})-strongly "+
+                        "regular graph exists.").format(v,k,l,mu))
 
 def apparently_feasible_parameters(int n):
     r"""
@@ -433,12 +476,26 @@ def apparently_feasible_parameters(int n):
     feasible::
 
         sage: small_feasible = apparently_feasible_parameters(20); small_feasible
+        {(5, 2, 0, 1),
+         (9, 4, 1, 2),
+         (10, 3, 0, 1),
+         (10, 6, 3, 4),
+         (13, 6, 2, 3),
+         (15, 6, 1, 3),
+         (15, 8, 4, 4),
+         (16, 5, 0, 2),
+         (16, 6, 2, 2),
+         (16, 9, 4, 6),
+         (16, 10, 6, 6),
+         (17, 8, 3, 4)}
         sage: all(strongly_regular_graph(*x,existence=True) for x in small_feasible)
+        True
 
     But that becomes wrong for `v<30`::
 
         sage: small_feasible = apparently_feasible_parameters(30)
         sage: all(strongly_regular_graph(*x,existence=True) for x in small_feasible)
+        False
 
     """
     cdef int v,k,l,mu
@@ -483,10 +540,10 @@ def _check_database():
     assert apparently_feasible_parameters(1301) == set(_brouwer_database)
 
     # We empty the global database, to be sure that strongly_regular_graph does
-    # not use its data to give its answers.
+    # not use its data to answer.
     _brouwer_database, saved_database = {}, _brouwer_database
 
-    cdef int count = 0
+    cdef int missed = 0
     for params,dic in saved_database.items():
         sage_answer = strongly_regular_graph(*params,existence=True)
         if dic['status'] == 'open':
@@ -496,8 +553,9 @@ def _check_database():
         elif dic['status'] == 'exists':
             if sage_answer is not True:
                 print (("Sage cannot build a ({:<4} {:<4} {:<4} {:<4}) that exists. "+
-                       "Comment from Brouwer's database: ").format(*params)+dic['comments'])
-                count += 1
+                       "Comment from Brouwer's database: ").format(*params)
+                       +dic['comments'].encode('ascii','ignore'))
+                missed += 1
             assert sage_answer is not False
         elif dic['status'] == 'impossible':
             assert sage_answer is not True
@@ -508,8 +566,7 @@ def _check_database():
     print "\nIn Andries Brouwer's database:"
     print "- {} impossible entries".format(status.count('impossible'))
     print "- {} undecided entries".format(status.count('open'))
-    print "- {} realizable entries (Sage misses {} of them)".format(status.count('exists'),count)
+    print "- {} realizable entries (Sage misses {} of them)".format(status.count('exists'),missed)
 
+    # Reassign its value to the global database
     _brouwer_database = saved_database
-
-_check_database()
