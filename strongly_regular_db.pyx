@@ -265,32 +265,24 @@ def SRG_280_135_70_60():
     Return a strongly regular graph with parameters (280, 135, 70, 60).
 
     This graph is built from the action of `J_2` on a `3.PGL(2,9)` subgroup it
-    contains. As this actions is not easy to manipulate, we instead analyse the
-    actions of `J_2` on an orbit of `3.PGL(2,9)`.
+    contains.
 
     EXAMPLE::
 
-        sage: g=SRG_280_135_70_60()                  # not tested (~20s)
-        sage: g.is_strongly_regular(parameters=True) # not tested (~20s)
+        sage: g=SRG_280_135_70_60()                  # long time # optional - gap_packages
+        sage: g.is_strongly_regular(parameters=True) # long time # optional - gap_packages
+        (280, 135, 70, 60)
     """
-    from sage.groups.perm_gps.permgroup_named import JankoGroup
+    from sage.interfaces.gap import gap
+    from sage.groups.perm_gps.permgroup import PermutationGroup
     from sage.graphs.graph import Graph
 
-    J2=JankoGroup(2)
+    gap.load_package("AtlasRep")
 
-    sub=[hh for hh in J2.conjugacy_classes_subgroups() if hh.cardinality()==2160][0]
-
-    # As the ordering of h.orbit cannot be trusted to be stable, we hardcode u
-    # and v.
-    #
-    # ooo=g.orbit(frozenset(h.orbits()[1]),"OnSets")
-    # u,v = ooo[0],ooo[4]
-    u = frozenset([96,  9, 76, 78, 24, 52, 85, 56, 58, 60])
-    v = frozenset([ 2, 67, 37,  6, 41, 74, 78, 47, 56, 29])
-
-    edges = J2.orbit(frozenset([u,v]),"OnSetsSets")
-
-    g = Graph()
+    # A representation of J2 acting on a 3.PGL(2,9) it contains.
+    J2    = PermutationGroup(gap('AtlasGenerators("J2",2).generators'))
+    edges = J2.orbit((1,2),"OnSets")
+    g     = Graph()
     g.add_edges(edges)
     g.relabel()
     return g
