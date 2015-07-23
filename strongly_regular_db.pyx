@@ -33,6 +33,7 @@ from sage.graphs.generators.smallgraphs import M22Graph
 from sage.graphs.generators.smallgraphs import SimsGewirtzGraph
 from sage.graphs.generators.smallgraphs import HoffmanSingletonGraph
 from sage.graphs.generators.smallgraphs import SchlaefliGraph
+from sage.graphs.graph import Graph
 
 cdef dict _brouwer_database = None
 
@@ -415,8 +416,22 @@ def strongly_regular_graph(int v,int k,int l,int mu,bint existence=False):
 
     constructions = {
         ( 27,  16, 10,  8): [SchlaefliGraph],
+        ( 36,  14,  4,  6): [Graph,('c~rLDEOcKTPO`U`HOIj@MWFLQFAaRIT`HIWqPsQQJ'+
+          'DXGLqYM@gRLAWLdkEW@RQYQIErcgesClhKefC_ygSGkZ`OyHETdK[?lWStCapVgKK')],
+        ( 40,  12,  2,  4): [Graph,('g}iS[A@_S@OA_BWQIGaPCQE@CcQGcQECXAgaOdS@a'+
+          'CWEEAOIBH_HW?scb?f@GMBGGhIPGaQoh?q_bD_pGPq_WI`T_DBU?R_dECsSARGgogBO'+
+          '{_IPBKZ?DI@Wgt_E?MPo{_?')],
+        ( 45,  12,  3,  3): [Graph,('l~}CKMF_C?oB_FPCGaICQOaH@DQAHQ@Ch?aJHAQ@G'+
+          'P_CQAIGcAJGO`IcGOY`@IGaGHGaKSCDI?gGDgGcE_@OQAg@PCSO_hOa`GIDADAD@XCI'+
+          'ASDKB?oKOo@_SHCc?SGcGd@A`B?bOOHGQH?ROQOW`?XOPa@C_hcGo`CGJK')],
         ( 50,   7,  0,  1): [HoffmanSingletonGraph],
         ( 56,  10,  0,  2): [SimsGewirtzGraph],
+        ( 64,  18,  2,  6): [Graph,('~?@?~aK[A@_[?O@_B_?O?K?B_?A??K??YQQPHGcQQ'+
+          'CaPIOHAX?POhAPIC`GcgSAHDE?PCiC@BCcDADIG_QCocS@AST?OOceGG@QGcKcdCbCB'+
+          'gIEHAScIDDOy?DAWaEg@IQO?maHPOhAW_dBCX?s@HOpKD@@GpOpHO?bCbHGOaGgpWQQ'+
+          '?PDDDw@A_CSRIS_P?GeGpg`@?EOcaJGccbDC_dLAc_pHOe@`ocEGgo@sRo?WRAbAcPc'+
+          '?iCiHEKBO_hOiOWpOSGSTBQCUAW_DDIWOqHBO?gghw_?`kOAXH?\\Ds@@@CpIDKOpc@'+
+          'OCoeIS_YOgGATGaqAhKGA?cqDOwQKGc?')],
         ( 77,  16,  0,  4): [M22Graph],
         (231,  30,  9,  3): [CameronGraph],
         (275, 112, 30, 56): [McLaughlinGraph],
@@ -424,9 +439,11 @@ def strongly_regular_graph(int v,int k,int l,int mu,bint existence=False):
     }
 
     if params in constructions:
-        return True if existence else constructions[params]()
+        val = constructions[params]
+        return True if existence else val[0](*val[1:])
     if params_complement in constructions:
-        return True if existence else constructions[params_complement]().complement()
+        val = constructions[params_complement]
+        return True if existence else val[0](*val[1:]).complement()
 
     test_functions = [is_paley, is_johnson,
                       is_orthogonal_array_block_graph,
@@ -571,7 +588,7 @@ def _check_database():
     _brouwer_database, saved_database = {}, _brouwer_database
 
     cdef int missed = 0
-    for params,dic in saved_database.items():
+    for params,dic in sorted(saved_database.items()):
         sage_answer = strongly_regular_graph(*params,existence=True)
         if dic['status'] == 'open':
             if sage_answer:
@@ -597,3 +614,5 @@ def _check_database():
 
     # Reassign its value to the global database
     _brouwer_database = saved_database
+
+_check_database()
