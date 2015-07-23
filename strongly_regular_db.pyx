@@ -295,9 +295,7 @@ def strongly_regular_graph(int v,int k,int l,int mu,bint existence=False):
 
     This function relies partly on Andries Brouwer's `database of strongly
     regular graphs <http://www.win.tue.nl/~aeb/graphs/srg/srgtab.html>`__. See
-    the documentation of XXXXXXX for more information.
-
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxx
+    the documentation of XXXXXXXXXXXXXXXXXXXXXXXXX for more information.
 
     INPUT:
 
