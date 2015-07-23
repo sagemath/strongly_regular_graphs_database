@@ -260,6 +260,41 @@ cdef eigenvalues(int v,int k,int l,int mu):
     return [(-b+sqrt(D))/2.0,
             (-b-sqrt(D))/2.0]
 
+def SRG_280_135_70_60():
+    r"""
+    Return a strongly regular graph with parameters (280, 135, 70, 60).
+
+    This graph is built from the action of `J_2` on a `3.PGL(2,9)` subgroup it
+    contains. As this actions is not easy to manipulate, we instead analyse the
+    actions of `J_2` on an orbit of `3.PGL(2,9)`.
+
+    EXAMPLE::
+
+        sage: g=SRG_280_135_70_60()                  # not tested (~20s)
+        sage: g.is_strongly_regular(parameters=True) # not tested (~20s)
+    """
+    from sage.groups.perm_gps.permgroup_named import JankoGroup
+    from sage.graphs.graph import Graph
+
+    J2=JankoGroup(2)
+
+    sub=[hh for hh in J2.conjugacy_classes_subgroups() if hh.cardinality()==2160][0]
+
+    # As the ordering of h.orbit cannot be trusted to be stable, we hardcode u
+    # and v.
+    #
+    # ooo=g.orbit(frozenset(h.orbits()[1]),"OnSets")
+    # u,v = ooo[0],ooo[4]
+    u = frozenset([96,  9, 76, 78, 24, 52, 85, 56, 58, 60])
+    v = frozenset([ 2, 67, 37,  6, 41, 74, 78, 47, 56, 29])
+
+    edges = J2.orbit(frozenset([u,v]),"OnSetsSets")
+
+    g = Graph()
+    g.add_edges(edges)
+    g.relabel()
+    return g
+
 cdef bint seems_feasible(int v, int k, int l, int mu):
     r"""
     Tests is the set of parameters seems feasible
@@ -392,7 +427,9 @@ def strongly_regular_graph(int v,int k,int l,int mu,bint existence=False):
         ( 56,  10,  0,  2): [SimsGewirtzGraph],
         ( 77,  16,  0,  4): [M22Graph],
         (231,  30,  9,  3): [CameronGraph],
-        (275, 112, 30, 56): [McLaughlinGraph]}
+        (275, 112, 30, 56): [McLaughlinGraph],
+        (280, 135, 70, 60): [SRG_280_135_70_60],
+    }
 
     if params in constructions:
         return True if existence else constructions[params]()
