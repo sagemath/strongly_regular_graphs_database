@@ -10,11 +10,15 @@ Goal: associate to each set of parameters (v,k,λ,μ) a Sage graph object
 Sage code
 ---------
 
-- feasible_parameters.pyx: builds the list of all admissibles parameters
-                           (v,k,λ,μ).
+The file named strongly_regular_db.pyx is a Cython file containing all the Sage
+code. It contains a basic arithmetic test for a SRG to be admissible, and lists
+several Sage graph constructors known to return strongly regular graphs. When
+the users calls the `strongly_regular_graph` function, all these graph families
+are queried in the hope that one can return the requested strongly regular
+graph.
 
-- constructions.py:        Builds a dictionary associating a Sage graph
-                           to a set of parameters (v,k,λ,μ).
+Andries Brouwer's database [1] is used to answer some queries that Sage cannot
+answer by itself.
 
 So far, 810 entries of [1] can be built. 330 are left.
 
@@ -35,3 +39,4 @@ Please write directly to Andries Brouwer at aeb@cwi.nl.
 
 [1] http://www.win.tue.nl/~aeb/graphs/srg/srgtab.html
 [2] http://doc.sagemath.org/html/en/reference/structure/sage/structure/sage_object.html#sage.structure.sage_object.load
+[3] http://cython.org/
