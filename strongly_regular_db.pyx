@@ -560,7 +560,7 @@ cdef load_brouwer_database():
     if _brouwer_database is not None:
         return
     import json
-    with open('brouwer.json','r') as datafile:
+    with open('brouwer_srg_database.json','r') as datafile:
         _brouwer_database = {(v,k,l,mu):{'status':status,'comments':comments}
                              for (v,k,l,mu,status,comments) in json.load(datafile)}
 

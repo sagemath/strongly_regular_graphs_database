@@ -3,7 +3,7 @@ database:
 	python tmp_to_db.py
 	rm -f brouwer.tmp
 clean:
-	rm -f brouwer.txt
-	rm -f brouwer.json
+	rm -f brouwer_srg_database.txt
+	rm -f brouwer_srg_database.json
 	rm -f brouwer.tmp
 

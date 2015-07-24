@@ -18,18 +18,18 @@ data = {(x.pop('v'),x.pop('k'),x.pop('lambda'),x.pop('mu')):x
         for x in data}
 
 # Text output
-with open('brouwer.txt','w') as output:
+with open('brouwer_srg_database.txt','w') as output:
     for (v,k,l,mu),dic in sorted(data.items()):
         output.write("{:<4} {:<4} {:<4} {:<4} {:<10} {}\n".format(v,k,l,mu,dic['status'],dic['comments']))
-print "'brouwer.txt' file written."
+print "'brouwer_srg_database.txt' file written."
 
 # Json output
 import json
 json_list = [[v,k,l,mu,dic['status'],dic['comments']]
              for (v,k,l,mu),dic in sorted(data.items())]
-with open('brouwer.json', 'w') as output:
+with open('brouwer_srg_database.json', 'w') as output:
     json.dump(json_list, output)
-print "'brouwer.json' file written."
+print "'brouwer_srg_database.json' file written."
 
 # sobj output
 #from sage.structure.sage_object import save

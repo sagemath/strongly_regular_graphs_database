@@ -29,8 +29,8 @@ In order to help reproduce the database, this repository contains code to parse
 Andries Brouwer's html pages [1] and store it in two computer-friendly
 files. They can be obtained by running 'make'.
 
-    - brouwer.txt
-    - brouwer.json
+    - brouwer_srg_database.txt
+    - brouwer_srg_database.json
 
 A comment on the actual data?
 -----------------------------
