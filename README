@@ -1,33 +1,8 @@
 Database of Strongly Regular Graphs (SRG).
 
 This directory contains code to parse and reproduce Andries Brouwer's online
-database [1] using Sage.
-
-Goal: associate to each set of parameters (v,k,λ,μ) a Sage graph object
-      (whenever it exists) and store non-existence results. The result will be
-      included into Sage.
-
-Sage code
----------
-
-The file named strongly_regular_db.pyx is a Cython file containing all the Sage
-code. It contains a basic arithmetic test for a SRG to be admissible, and lists
-several Sage graph constructors known to return strongly regular graphs. When
-the users calls the `strongly_regular_graph` function, all these graph families
-are queried in the hope that one can return the requested strongly regular
-graph.
-
-Andries Brouwer's database [1] is used to answer some queries that Sage cannot
-answer by itself.
-
-So far, 1140 entries of [1] can be built. 330 are left.
-
-Computer-friendly Andries Brouwer's database [1]
-------------------------------------------------
-
-In order to help reproduce the database, this repository contains code to parse
-Andries Brouwer's html pages [1] and store it in two computer-friendly
-files. They can be obtained by running 'make'.
+database [1] using Sage [2], and store it in two computer-friendly files. They
+can be obtained by running 'make'.
 
     - brouwer_srg_database.txt
     - brouwer_srg_database.json
@@ -38,3 +13,4 @@ A comment on the actual data?
 Please write directly to Andries Brouwer at aeb@cwi.nl.
 
 [1] http://www.win.tue.nl/~aeb/graphs/srg/srgtab.html
+[2] http://www.sagemath.org/
