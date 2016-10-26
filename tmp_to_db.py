@@ -1,3 +1,4 @@
+from __future__ import print_function
 columns = ["color", "chr", "v", "k", "lambda", "mu", "r_power_f", "s_power_g", "comments"]
 
 with open('brouwer.tmp') as f:
@@ -21,7 +22,7 @@ data = {(x.pop('v'),x.pop('k'),x.pop('lambda'),x.pop('mu')):x
 with open('brouwer_srg_database.txt','w') as output:
     for (v,k,l,mu),dic in sorted(data.items()):
         output.write("{:<4} {:<4} {:<4} {:<4} {:<10} {}\n".format(v,k,l,mu,dic['status'],dic['comments']))
-print "'brouwer_srg_database.txt' file written."
+print ("'brouwer_srg_database.txt' file written.")
 
 # Json output
 import json
@@ -29,16 +30,16 @@ json_list = [[v,k,l,mu,dic['status'],dic['comments']]
              for (v,k,l,mu),dic in sorted(data.items())]
 with open('brouwer_srg_database.json', 'w') as output:
     json.dump(json_list, output)
-print "'brouwer_srg_database.json' file written."
+print ("'brouwer_srg_database.json' file written.")
 
 # sobj output
 #from sage.structure.sage_object import save
 #save(data,'brouwer.sobj')
 
-print "'brouwer.sobj' file written."
+print ("'brouwer.sobj' file written.")
 
 stats = [x['status'] for x in data.values()]
-print "statistics:"
-print " - {} impossible".format(stats.count('impossible'))
-print " - {} open".format(stats.count('open'))
-print " - {} realizable".format(stats.count('exists'))
+print ("statistics:")
+print (" - {} impossible".format(stats.count('impossible')))
+print (" - {} open".format(stats.count('open')))
+print (" - {} realizable".format(stats.count('exists')))
